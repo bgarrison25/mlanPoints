@@ -71,20 +71,18 @@
                 </div>
 
                 <div class="links">
-                    @foreach ($guilds->chunk(5) as $chunk)
-                    <div class="row">
-                        <div class="col-xs-10 col-sm-10 col-md-10">
-                        @foreach($chunk as $guild)
-                            @auth
-                            <a href="{{ route('guilds.show',$guild->id) }}">{{ $guild->name }} ({{ $guild->points }})</a>
-                            @endauth
-                            @guest
-                            {{ $guild->name }} ({{ $guild->points }})
-                            @endguest
-                        @endforeach
-                        </div>
-                    </div>
+                    <ol>
+                    @foreach($guilds as $guild)
+                        @auth
+                        <li>
+                            <a href="{{ route('guilds.show',$guild->id) }}" style="text-decoration: none">{{ $guild->name }} ({{ $guild->points }})</a>
+                        </li>
+                        @endauth
+                        @guest
+                        <li>{{ $guild->name }} ({{ $guild->points }})</li>
+                        @endguest
                     @endforeach
+                    </ol>
                 </div>
             </div>
         </div>
