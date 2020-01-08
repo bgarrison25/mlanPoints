@@ -23,7 +23,7 @@ class GuildPolicy
      * @param  \App\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(?User $user)
     {
         return true;
     }
@@ -35,7 +35,7 @@ class GuildPolicy
      * @param  \App\Guild  $guild
      * @return mixed
      */
-    public function view(User $user, Guild $guild)
+    public function view(?User $user, Guild $guild)
     {
         return true;
     }
