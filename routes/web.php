@@ -12,7 +12,7 @@
 */
 Auth::routes();
 
-
+Route::get('/logout', 'Auth\LoginController@logout');
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('guilds', 'GuildController');

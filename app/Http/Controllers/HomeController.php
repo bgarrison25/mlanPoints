@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function welcome()
     {
-        $guilds = Guild::all();
+        $guilds = Guild::orderBy('points', 'desc')->get();
         return view('welcome', compact('guilds'));
     }
 }
