@@ -49,28 +49,29 @@
         updatePoints(guildId, amount, reason);
     });
 
-    function updatePoints (guildId, points, reason) {
-        var pointsField = $('#guild-points-' + guildId);
-        var currentPoints = pointsField.text();
-        var updatedPoints = parseInt(currentPoints) + points;
-
+    function updatePoints (guildId, points, reason)
+    {
         $('#points-save').hide();
         $('#points-spinner').show();
 
         if (reason !== "") {
             axios.post('/guilds/' + guildId, {
                 data: {
-                    "points": updatedPoints
+                    "points": points,
+                    "reason": reason
                 },
                 _method: 'put'
             }).then(function (response) {
-                pointsField.text(updatedPoints);
+                $('.success-message').show().text('Guild updated Successfully');
             }).catch(function (error) {
-                console.log(error.response.data);
+                console.log(error);
             }).then(function() {
                 $('#exampleModal').modal('hide');
                 $('#points-save').show();
                 $('#points-spinner').hide();
+                if($("#guild-points-" + guildId).length != 0) {
+                    $("#guild-points-" + guildId).text(points);
+                }
             });
         } else {
             $('#points-save').show();

@@ -30,12 +30,12 @@
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                     <div id="point-buttons" class="mt-1">
-                        <a class="btn btn-sm btn-info point-adder" data-amount="1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+1</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+5</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+10</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-1</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-5</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-10</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+1</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+5</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+10</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-1</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-5</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-10</a>
                     </div>
                 </td>
             </tr>
@@ -53,6 +53,12 @@
 <script type="text/javascript">
 $(document).ready(function() {
     $('.point-adder').click('#point-buttons', function(e) {
+        var points = $(e.target).data('amount');
+        var total = points + $(e.target).data('change');
+        console.log(points);
+        console.log($(e.target).data('change'));
+        console.log(total);
+        $(e.target).data('amount', total);
         $('#exampleModal').modal('toggle', $(this));
     });
 });

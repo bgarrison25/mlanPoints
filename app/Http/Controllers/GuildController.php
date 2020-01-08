@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Guild;
 use Illuminate\Http\Request;
 
@@ -88,7 +89,27 @@ class GuildController extends Controller
      */
     public function update(Request $request, Guild $guild)
     {
-        $guild->update($request->data);
+        $originalPoints = $guild->points;
+        $guild->update([
+            'name' => isset($request->data['name']) ? $request->data['name'] : $guild->name,
+            'points' => isset($request->data['points']) ? $request->data['points'] : $guild->points,
+        ]);
+
+        if ($request->data['points'] != $originalPoints) {
+            $guild->pointLogs()->create([
+                'user_id' => Auth::user()->id,
+                'guild_id' => $guild->id,
+                'amount' => $guild->points - $originalPoints,
+                'reason' => $request->data['reason'],
+            ]);
+            dd($guild);
+        }
+
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success'
+            ]);
+        }
 
         return redirect()->route('guilds.index')->with('success','Guild updated successfully');
     }

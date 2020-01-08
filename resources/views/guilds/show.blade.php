@@ -32,5 +32,30 @@
                 <a class="btn btn-primary" href="{{ route('guilds.index') }}">Back</a>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-10 col-sm-10 col-md-10">
+                <p class="h3 mt-2">Point Log</p>
+                <table class="table table-sm table-bordered mt-2">
+                    <tr>
+                        <th>User</th>
+                        <th>Amount</th>
+                        <th>Reason</th>
+                        <th>Date</th>
+                    </tr>
+                    @forelse ($guild->pointLogs->sortByDesc('created_at'); as $pointLog)
+                    <tr>
+                        <td class="align-middle">{{ $pointLog->user->name }} ({{ $pointLog->user->email }})</td>
+                        <td class="align-middle">{{ $pointLog->amount }}</td>
+                        <td class="align-middle">{{ $pointLog->reason }}</td>
+                        <td class="align-middle">{{ $pointLog->created_at }}</td>
+                    </tr>
+                    @empty
+                    <tr>
+                        <td colspan="3">There are currently no point changes for this guild</td>
+                    </tr>
+                    @endforelse
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
