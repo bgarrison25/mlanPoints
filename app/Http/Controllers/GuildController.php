@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Guild;
+use App\Exports\GuildExport;
+
 use Illuminate\Http\Request;
+
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuildController extends Controller
 {
@@ -25,6 +29,9 @@ class GuildController extends Controller
      */
     public function index()
     {
+        if (request()->has('type') && request()->type === "csv") {
+            return Excel::download(new GuildExport, 'guilds.csv');
+        }
         $guilds = Guild::paginate(5);
 
         return view('guilds.index',compact('guilds'))
