@@ -30,12 +30,12 @@
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
                     </form>
                     <div id="point-buttons" class="mt-1">
-                        <a class="btn btn-sm btn-info point-adder" data-amount="1" data-guild="{{ $guild->id }}">+1</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="5" data-guild="{{ $guild->id }}">+5</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="10" data-guild="{{ $guild->id }}">+10</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-1" data-guild="{{ $guild->id }}">-1</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-5" data-guild="{{ $guild->id }}">-5</a>
-                        <a class="btn btn-sm btn-info point-adder" data-amount="-10" data-guild="{{ $guild->id }}">-10</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+1</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+5</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+10</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="-1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-1</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="-5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-5</a>
+                        <a class="btn btn-sm btn-info point-adder" data-amount="-10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-10</a>
                     </div>
                 </td>
             </tr>
@@ -46,30 +46,15 @@
             @endforelse
         </table>
 
-        {!! $guilds->links() !!}
+        @include('modals.editPoints')
     </div>
 @endsection
 @push('js')
 <script type="text/javascript">
 $(document).ready(function() {
     $('.point-adder').click('#point-buttons', function(e) {
-        var amount = $(e.target).data('amount');
-        var guildId = $(e.target).data('guild');
-        var pointsField = $('#guild-points-' + guildId);
-        var currentPoints = pointsField.text();
-        var updatedPoints = parseInt(currentPoints) + amount;
-
-        axios.post('/guilds/' + guildId, {
-            data: {
-                "points": updatedPoints
-            },
-            _method: 'put'
-        }).then(function (response) {
-            pointsField.text(updatedPoints);
-        }).catch(function (error) {
-            console.log(error.response.data);
-        });
-    })
+        $('#exampleModal').modal('toggle', $(this));
+    });
 });
 </script>
 @endpush
