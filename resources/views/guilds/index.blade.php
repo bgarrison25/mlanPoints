@@ -45,7 +45,7 @@
             </tr>
             @endforelse
         </table>
-        {{ $users->links() }}
+        {{ $guilds->links() }}
         @include('modals.editPoints')
     </div>
 @endsection
