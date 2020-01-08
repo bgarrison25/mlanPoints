@@ -32,10 +32,10 @@ class GuildController extends Controller
         if (request()->has('type') && request()->type === "csv") {
             return Excel::download(new GuildExport, 'guilds.csv');
         }
-        $guilds = Guild::paginate(5);
+        $guilds = Guild::paginate(10);
 
         return view('guilds.index',compact('guilds'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -59,7 +59,6 @@ class GuildController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-
         Guild::create($request->all());
 
         return redirect()->route('guilds.index')->with('success','Guild created successfully.');
