@@ -8,19 +8,24 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
+        @auth
         <div class="pull-right">
             <a class="btn btn-success" href="{{ route('guilds.create') }}"> Create New Guild</a>
         </div>
+        @endauth
         <table class="table table-sm table-bordered mt-2">
             <tr>
                 <th>Name</th>
                 <th>Points</th>
+                @auth
                 <th width="280px">Action</th>
+                @endauth
             </tr>
             @forelse ($guilds as $guild)
             <tr>
                 <td class="align-middle">{{ $guild->name }}</td>
                 <td class="align-middle" id="guild-points-{{ $guild->id }}">{{ $guild->points }}</td>
+                @auth
                 <td class="align-middle">
                     <form action="{{ route('guilds.destroy',$guild->id) }}" method="POST">
                         @csrf
@@ -38,6 +43,7 @@
                         <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-10</a>
                     </div>
                 </td>
+                @endauth
             </tr>
             @empty
             <tr>
