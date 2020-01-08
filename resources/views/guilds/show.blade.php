@@ -28,7 +28,9 @@
         </div>
         <div class="row">
             <div class="col-xs-10 col-sm-10 col-md-10">
+                @can('update', $guild)
                 <a class="btn btn-primary" href="{{ route('guilds.edit', $guild->id) }}">Edit</a>
+                @endcan
                 <a class="btn btn-primary" href="{{ route('guilds.index') }}">Back</a>
             </div>
         </div>

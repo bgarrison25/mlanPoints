@@ -8,11 +8,11 @@
                 <p>{{ $message }}</p>
             </div>
         @endif
-        @auth
+        @can('create', App\Guild::class)
         <div class="pull-right">
             <a class="btn btn-success" href="{{ route('guilds.create') }}"> Create New Guild</a>
         </div>
-        @endauth
+        @endcan
         <table class="table table-sm table-bordered mt-2">
             <tr>
                 <th>Name</th>
@@ -30,10 +30,17 @@
                     <form action="{{ route('guilds.destroy',$guild->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
+                        @can('view', $guild)
                         <a class="btn btn-sm btn-info" href="{{ route('guilds.show',$guild->id) }}">Show</a>
+                        @endcan
+                        @can('update', $guild)
                         <a class="btn btn-sm btn-primary" href="{{ route('guilds.edit',$guild->id) }}">Edit</a>
+                        @endcan
+                        @can('delete', $guild)
                         <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                        @endcan
                     </form>
+                    @can('update', $guild)
                     <div id="point-buttons" class="mt-1">
                         <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="1" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+1</a>
                         <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">+5</a>
@@ -42,6 +49,7 @@
                         <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-5" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-5</a>
                         <a class="btn btn-sm btn-info point-adder" data-amount="{{ $guild->points }}" data-change="-10" data-guild="{{ $guild->id }}" data-guildName="{{ $guild->name }}">-10</a>
                     </div>
+                    @endcan
                 </td>
                 @endauth
             </tr>
