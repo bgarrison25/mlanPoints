@@ -32,7 +32,7 @@ class GuildController extends Controller
         if (request()->has('type') && request()->type === "csv") {
             return Excel::download(new GuildExport, 'guilds.csv');
         }
-        $guilds = Guild::paginate(10);
+        $guilds = Guild::orderBy('name')->paginate(10);
 
         return view('guilds.index',compact('guilds'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
