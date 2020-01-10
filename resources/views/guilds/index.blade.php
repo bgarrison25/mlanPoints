@@ -68,7 +68,7 @@
 $(document).ready(function() {
     $('.point-adder').click('#point-buttons', function(e) {
         var points = $(e.target).data('amount');
-        var total = points + $(e.target).data('change');
+        var total = points + parseInt($(e.target).data('change'));
         $(e.target).data('amount', total);
         $('#exampleModal').modal('toggle', $(this));
     });
